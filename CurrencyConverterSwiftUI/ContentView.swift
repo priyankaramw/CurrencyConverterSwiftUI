@@ -11,22 +11,14 @@ import CoreData
 
 
 struct ContentView: View {
-    //@Environment(\.managedObjectContext) private var viewContext
     
     @State var baseCode: String = "USD"
     @State var quoteCode: String = "LKR"
     
-    @State var baseCodePrevious: String = "USD"
-    @State var quoteCodePrevious: String = "LKR"
-    
     @State var baseAmount : Double = 0.0
     @State var quoteAmount : Double = 0.0
     
-    @State var baseAmountPrevious : Double = 0.0
-    @State var quoteAmountPrevious : Double = 0.0
-    
     @State var conversionRate : Double = 0.0
-    @State var conversionRatePrevious : Double = 0.0
     
     var body: some View {
         
@@ -35,7 +27,6 @@ struct ContentView: View {
                 Section{
                     TextField("Enter value", value: $baseAmount, formatter: numberFormatter)
                         .keyboardType(.decimalPad)
-                    //Text(baseSelectedStr)
                     Picker("Select Currency", selection: $baseCode) {
                         ForEach(currencyOptions) { item in
                             Text(item.code).tag(item.code)
@@ -58,18 +49,6 @@ struct ContentView: View {
                 }
                 Section{
                     Text("1 \(baseCode) is equal to \(conversionRate) \(quoteCode)")
-//                    ExchangeRateView(
-//                        baseCode: $baseCode,
-//                        quoteCode: $quoteCode,
-//                        baseCodePrevious: $baseCodePrevious,
-//                        quoteCodePrevious: $quoteCodePrevious,
-//                        baseAmount: $baseAmount,
-//                        quoteAmount: $quoteAmount,
-//                        conversionRate: $conversionRate,
-//                        conversionRatePrevious: $conversionRatePrevious,
-//                        baseAmountPrevious: $baseAmountPrevious,
-//                        quoteAmountPrevious: $quoteAmountPrevious
-//                    )
 //                    Text("Read more about")
                 } header: {
                     Text("More Info")
@@ -78,14 +57,16 @@ struct ContentView: View {
             }
             .navigationTitle("Converter")
             .navigationBarTitleDisplayMode(.automatic)
+        }.onAppear() {
+            refreshRate()
         }.onChange(of: baseAmount) { newValue in
-            calculate()
-        }.onChange(of: baseCode) { newValue in
-            calculate()
+            onBaseAmountChange()
         }.onChange(of: quoteAmount) { newValue in
-            calculate()
+            onQuoteAmountChange()
+        }.onChange(of: baseCode) { newValue in
+            onBaseCodeChange()
         }.onChange(of: quoteCode) { newValue in
-            calculate()
+            onQuoteCodeChange()
         }
         
     }
@@ -93,30 +74,31 @@ struct ContentView: View {
     func refreshRate () {
         Task {
             let customUrl = "https://v6.exchangerate-api.com/v6/\(apiKey)/pair/\(baseCode)/\(quoteCode)"
-            
             let (data, _) = try await URLSession.shared.data(from: URL(string:"\(customUrl)")!)
             let decodedResponse = try? JSONDecoder().decode(CurrencyPairRate.self, from: data)
-            
             conversionRate = decodedResponse?.conversion_rate ?? 0.0
         }
     }
     
-    func calculate () {
+    func onBaseAmountChange () {
         if (conversionRate == 0) {
             refreshRate()
         }
-        
-        if (baseCodePrevious != baseCode || quoteCodePrevious != quoteCode) {
+        quoteAmount = baseAmount * conversionRate
+    }
+    func onQuoteAmountChange () {
+        if (conversionRate == 0) {
             refreshRate()
         }
-        
-        if (baseAmountPrevious != baseAmount && baseAmount != 0) {
-            quoteAmount = baseAmount * conversionRate
-            baseAmountPrevious = baseAmount
-        } else if (quoteAmountPrevious != quoteAmount && quoteAmount != 0) {
-            baseAmount = quoteAmount * 1/conversionRate
-            quoteAmountPrevious = quoteAmount
-        }
+        baseAmount = quoteAmount * 1/conversionRate
+    }
+    func onBaseCodeChange () {
+        refreshRate()
+        quoteAmount = baseAmount * conversionRate
+    }
+    func onQuoteCodeChange () {
+        refreshRate()
+        baseAmount = quoteAmount * 1/conversionRate
     }
     
     @State private var numberFormatter: NumberFormatter = {
@@ -126,12 +108,20 @@ struct ContentView: View {
     }()
 }
 
-
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
 }
+
+
+
+
+
+
+
+
+
 
 
 // Number formatter example link
