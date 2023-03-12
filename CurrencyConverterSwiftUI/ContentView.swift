@@ -13,7 +13,7 @@ import CoreData
 struct ContentView: View {
     
     @State var baseCode: String = "USD"
-    @State var quoteCode: String = "LKR"
+    @State var quoteCode: String = "SGD"
     
     @State var baseAmount : Double = 0.0
     @State var quoteAmount : Double = 0.0
