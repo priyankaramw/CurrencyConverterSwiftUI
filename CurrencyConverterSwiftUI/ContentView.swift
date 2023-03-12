@@ -6,40 +6,50 @@
 //
 
 import SwiftUI
-import CoreData
-
-
+//import CoreData
 
 struct ContentView: View {
     
+    /*
+     *  Variable declaration:
+     *  base = first currency & value
+     *  quote = second currency & value
+     */
+    
     @State var baseCode: String = "USD"
     @State var quoteCode: String = "SGD"
-    
     @State var baseAmount : Double = 0.0
     @State var quoteAmount : Double = 0.0
     
     @State var conversionRate : Double = 0.0
     
+    // Below variable is used to present the "Read more about [currency pair]" sheet.
+    // Its an additional part for this test.
+    @State var isViewMorePresenting = false
+    
     var body: some View {
-        
         NavigationStack{
             List{
+                // Section for Base Currency
                 Section{
                     TextField("Enter value", value: $baseAmount, formatter: numberFormatter)
                         .keyboardType(.decimalPad)
-                    Picker("Select Currency", selection: $baseCode) {
+                    Picker("Select", selection: $baseCode) {
                         ForEach(currencyOptions) { item in
                             Text(item.code).tag(item.code)
+//                            SelectLIstItemView().tag(item.code)
                         }
                     }
                     .pickerStyle(.navigationLink)
                 } header: {
                     Text("Base Currency")
                 }
+                
+                // Section for Quote Currency
                 Section{
                     TextField("Enter value", value: $quoteAmount, formatter: numberFormatter).keyboardType(.decimalPad)
                     //Text(quoteSelectedStr)
-                    Picker("Select Currency", selection: $quoteCode) {
+                    Picker("Select", selection: $quoteCode) {
                         ForEach(currencyOptions) { item in
                             Text(item.code).tag(item.code)
                         }
@@ -47,18 +57,26 @@ struct ContentView: View {
                 } header: {
                     Text("Target Currency")
                 }
+                
+                // Section for more info
                 Section{
-                    Text("1 \(baseCode) is equal to \(conversionRate) \(quoteCode)")
-//                    Text("Read more about")
+                    Text("1 \(baseCode) is equal to \(conversionRate, format: .number) \(quoteCode)")
+                    Button("Read more about \(baseCode)/\(quoteCode)") {
+                        isViewMorePresenting = true
+                    }
+                    .sheet(isPresented: $isViewMorePresenting) {
+                        ReadMoreView(baseCode: baseCode, quoteCode: quoteCode)
+                    }
                 } header: {
                     Text("More Info")
                 }
-                
             }
             .navigationTitle("Converter")
             .navigationBarTitleDisplayMode(.automatic)
+            
+            // Reminder >>>>>>> uncoment below two lines before submiting. (to limit api calls while coding)
         }.onAppear() {
-            refreshRate()
+            refreshRate()   // Used to load exchange rate onLoad
         }.onChange(of: baseAmount) { newValue in
             onBaseAmountChange()
         }.onChange(of: quoteAmount) { newValue in
@@ -68,39 +86,7 @@ struct ContentView: View {
         }.onChange(of: quoteCode) { newValue in
             onQuoteCodeChange()
         }
-        
     }
-    
-    func refreshRate () {
-        Task {
-            let customUrl = "https://v6.exchangerate-api.com/v6/\(apiKey)/pair/\(baseCode)/\(quoteCode)"
-            let (data, _) = try await URLSession.shared.data(from: URL(string:"\(customUrl)")!)
-            let decodedResponse = try? JSONDecoder().decode(CurrencyPairRate.self, from: data)
-            conversionRate = decodedResponse?.conversion_rate ?? 0.0
-        }
-    }
-    
-    func onBaseAmountChange () {
-        if (conversionRate == 0) {
-            refreshRate()
-        }
-        quoteAmount = baseAmount * conversionRate
-    }
-    func onQuoteAmountChange () {
-        if (conversionRate == 0) {
-            refreshRate()
-        }
-        baseAmount = quoteAmount * 1/conversionRate
-    }
-    func onBaseCodeChange () {
-        refreshRate()
-        quoteAmount = baseAmount * conversionRate
-    }
-    func onQuoteCodeChange () {
-        refreshRate()
-        baseAmount = quoteAmount * 1/conversionRate
-    }
-    
     @State private var numberFormatter: NumberFormatter = {
         var nf = NumberFormatter()
         nf.numberStyle = .decimal
@@ -116,14 +102,6 @@ struct ContentView_Previews: PreviewProvider {
 
 
 
-
-
-
-
-
-
-
-
 // Number formatter example link
 /* https://developer.apple.com/documentation/swiftui/textfield/init(_:value:formatter:prompt:)-8kpfa
  
@@ -133,11 +111,3 @@ struct ContentView_Previews: PreviewProvider {
  Text(myDouble, format: .number.notation(.scientific))
  
  */
-
-
-
-// code for onChange
-
-//    .onChange(of: baseCode, perform: { newValue in
-//        calculate()
-//    })
