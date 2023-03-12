@@ -41,7 +41,8 @@ struct ExchangeRateView: View {
             Text("\(baseAmount) | \(baseAmountPrevious)")
             Text("\(quoteAmount) | \(quoteAmountPrevious)")
         }
-        .onAppear{self.calculate()}
+        
+//        .onAppear{self.calculate()}
         
     }
     

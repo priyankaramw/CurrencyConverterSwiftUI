@@ -57,19 +57,19 @@ struct ContentView: View {
                     Text("Target Currency")
                 }
                 Section{
-                    //Text("1 USD is equal to 1.55 EUR")
-                    ExchangeRateView(
-                        baseCode: $baseCode,
-                        quoteCode: $quoteCode,
-                        baseCodePrevious: $baseCodePrevious,
-                        quoteCodePrevious: $quoteCodePrevious,
-                        baseAmount: $baseAmount,
-                        quoteAmount: $quoteAmount,
-                        conversionRate: $conversionRate,
-                        conversionRatePrevious: $conversionRatePrevious,
-                        baseAmountPrevious: $baseAmountPrevious,
-                        quoteAmountPrevious: $quoteAmountPrevious
-                    )
+                    Text("1 \(baseCode) is equal to \(conversionRate) \(quoteCode)")
+//                    ExchangeRateView(
+//                        baseCode: $baseCode,
+//                        quoteCode: $quoteCode,
+//                        baseCodePrevious: $baseCodePrevious,
+//                        quoteCodePrevious: $quoteCodePrevious,
+//                        baseAmount: $baseAmount,
+//                        quoteAmount: $quoteAmount,
+//                        conversionRate: $conversionRate,
+//                        conversionRatePrevious: $conversionRatePrevious,
+//                        baseAmountPrevious: $baseAmountPrevious,
+//                        quoteAmountPrevious: $quoteAmountPrevious
+//                    )
 //                    Text("Read more about")
                 } header: {
                     Text("More Info")
@@ -78,6 +78,44 @@ struct ContentView: View {
             }
             .navigationTitle("Converter")
             .navigationBarTitleDisplayMode(.automatic)
+        }.onChange(of: baseAmount) { newValue in
+            calculate()
+        }.onChange(of: baseCode) { newValue in
+            calculate()
+        }.onChange(of: quoteAmount) { newValue in
+            calculate()
+        }.onChange(of: quoteCode) { newValue in
+            calculate()
+        }
+        
+    }
+    
+    func refreshRate () {
+        Task {
+            let customUrl = "https://v6.exchangerate-api.com/v6/\(apiKey)/pair/\(baseCode)/\(quoteCode)"
+            
+            let (data, _) = try await URLSession.shared.data(from: URL(string:"\(customUrl)")!)
+            let decodedResponse = try? JSONDecoder().decode(CurrencyPairRate.self, from: data)
+            
+            conversionRate = decodedResponse?.conversion_rate ?? 0.0
+        }
+    }
+    
+    func calculate () {
+        if (conversionRate == 0) {
+            refreshRate()
+        }
+        
+        if (baseCodePrevious != baseCode || quoteCodePrevious != quoteCode) {
+            refreshRate()
+        }
+        
+        if (baseAmountPrevious != baseAmount && baseAmount != 0) {
+            quoteAmount = baseAmount * conversionRate
+            baseAmountPrevious = baseAmount
+        } else if (quoteAmountPrevious != quoteAmount && quoteAmount != 0) {
+            baseAmount = quoteAmount * 1/conversionRate
+            quoteAmountPrevious = quoteAmount
         }
     }
     
@@ -105,3 +143,11 @@ struct ContentView_Previews: PreviewProvider {
  Text(myDouble, format: .number.notation(.scientific))
  
  */
+
+
+
+// code for onChange
+
+//    .onChange(of: baseCode, perform: { newValue in
+//        calculate()
+//    })
