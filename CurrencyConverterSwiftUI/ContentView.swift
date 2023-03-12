@@ -11,64 +11,46 @@ import CoreData
 
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-      
-    @State private var baseSelected: Item?
-    @State private var quoteSelected: Item?
+    //@Environment(\.managedObjectContext) private var viewContext
+    
+    @State var baseCode: String = "USD"
+    @State var quoteCode: String = "LKR"
+    
+    @State var baseCodePrevious: String = "USD"
+    @State var quoteCodePrevious: String = "LKR"
     
     @State var baseAmount : Double = 0.0
     @State var quoteAmount : Double = 0.0
+    
+    @State var baseAmountPrevious : Double = 0.0
+    @State var quoteAmountPrevious : Double = 0.0
+    
     @State var conversionRate : Double = 0.0
+    @State var conversionRatePrevious : Double = 0.0
     
-//    var baseAmountTemp;
-//    var quoteAmountTemp;
-    
-    struct Item: Identifiable, Hashable{
-        let id = UUID()
-        let name: String
-        let value: String
-    }
-    
-    let items = [
-        Item(name: "AED", value: "AE Dirham"),
-        Item(name: "AFN", value: "Afghan Afghani"),
-        Item(name: "ALL", value: "Albanian Lek"),
-        Item(name: "AMD", value: "Armenian Dram"),
-        Item(name: "ANG", value: "Netherlands Antillian Guilder"),
-        Item(name: "AOA", value: "Angolan Kwanza"),
-        Item(name: "ARS", value: "Argentine Peso"),
-        Item(name: "AUD", value: "Australian Dollar"),
-        Item(name: "AWG", value: "Aruban Florin"),
-        Item(name: "AZN", value: "Azerbaijani Manat"),
-        Item(name: "BAM", value: "Bosnia and Herzegovina Mark"),
-        Item(name: "BBD", value: "Barbados Dollar"),
-        Item(name: "BDT", value: "Bangladeshi Taka"),
-        Item(name: "BGN", value: "Bulgarian Lev"),
-        Item(name: "BHD", value: "Bahraini Dinar"),
-        Item(name: "BIF", value: "Burundian Franc"),
-        Item(name: "BMD", value: "Bermudian Dollar"),
-        Item(name: "BND", value: "Brunei Dollar"),
-    ]
-
     var body: some View {
         
         NavigationStack{
             List{
                 Section{
-                    //TextField("Enter value", text: $baseAmount).keyboardType(.decimalPad)
-                    Picker("Select Currency", selection: $baseSelected) {
-                        ForEach(items) { item in
-                            Text(item.name).tag(item as Item?)
+                    TextField("Enter value", value: $baseAmount, formatter: numberFormatter)
+                        .keyboardType(.decimalPad)
+                    //Text(baseSelectedStr)
+                    Picker("Select Currency", selection: $baseCode) {
+                        ForEach(currencyOptions) { item in
+                            Text(item.code).tag(item.code)
                         }
-                    }.pickerStyle(.navigationLink)
+                    }
+                    .pickerStyle(.navigationLink)
                 } header: {
                     Text("Base Currency")
                 }
                 Section{
-                    //TextField("Enter amount", text: $quoteAmount).keyboardType(.decimalPad)
-                    Picker("Select Currency", selection: $quoteSelected) {
-                        ForEach(items) { item in
-                            Text(item.name).tag(item as Item?)
+                    TextField("Enter value", value: $quoteAmount, formatter: numberFormatter).keyboardType(.decimalPad)
+                    //Text(quoteSelectedStr)
+                    Picker("Select Currency", selection: $quoteCode) {
+                        ForEach(currencyOptions) { item in
+                            Text(item.code).tag(item.code)
                         }
                     }.pickerStyle(.navigationLink)
                 } header: {
@@ -76,15 +58,19 @@ struct ContentView: View {
                 }
                 Section{
                     //Text("1 USD is equal to 1.55 EUR")
-                  GetRateApiCall(
-                    baseCode: baseSelected?.name ?? "USD",
-                    quoteCode: quoteSelected?.name ?? "SGD",
-                        
-                    baseAmount: $baseAmount,
-                    quoteAmount: $quoteAmount,
-                    conversionRate: $conversionRate)
-                    
-                    Text("Read more about")
+                    ExchangeRateView(
+                        baseCode: $baseCode,
+                        quoteCode: $quoteCode,
+                        baseCodePrevious: $baseCodePrevious,
+                        quoteCodePrevious: $quoteCodePrevious,
+                        baseAmount: $baseAmount,
+                        quoteAmount: $quoteAmount,
+                        conversionRate: $conversionRate,
+                        conversionRatePrevious: $conversionRatePrevious,
+                        baseAmountPrevious: $baseAmountPrevious,
+                        quoteAmountPrevious: $quoteAmountPrevious
+                    )
+//                    Text("Read more about")
                 } header: {
                     Text("More Info")
                 }
@@ -94,49 +80,28 @@ struct ContentView: View {
             .navigationBarTitleDisplayMode(.automatic)
         }
     }
+    
+    @State private var numberFormatter: NumberFormatter = {
+        var nf = NumberFormatter()
+        nf.numberStyle = .decimal
+        return nf
+    }()
 }
 
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        ContentView()
     }
 }
 
 
-/* Old function */
-
-//    func populateArrays () {
-//        for x in CurrencyModel.currencyData {
-//            currencyCodesArray.append(x.code)
-//            print(x.code)
-//        }
-//    }
-    
-//    func calculate (convert: String) -> String {
-//        var conversion: Double = 1.0
-//        let amount = Double(convert) ?? 0.0
-//        let selectedCurrency = currencies[baseSelection]
-//        let to = currencies[quoteSelection]
-//
-//        let usdRates = ["USD": 1.0, "EUR": 0.87, "GBP": 0.73]
-//        let eurRates = ["USD": 1.15, "EUR": 1.0, "GBP": 0.84]
-//        let gbpRates = ["USD": 1.37, "EUR": 1.18, "GBP": 1.0]
-//
-//        // do the logic here.
-//
-//        return String(format: "%.2f", 20.6)
-//    }
-
-
-
-
-/* old picker item
-
-Picker(selection: $quoteSelection, label: Text(currencies[baseSelection])) {
-    ForEach(0 ..< currencies.count) {
-        index in Text(self.currencies[index]).tag(index)
-    }
-}.pickerStyle(.navigationLink)
-
-*/
+// Number formatter example link
+/* https://developer.apple.com/documentation/swiftui/textfield/init(_:value:formatter:prompt:)-8kpfa
+ 
+ TextField("Double", value: $myDouble, formatter: numberFormatter)
+ Text(myDouble, format: .number)
+ Text(myDouble, format: .number.precision(.significantDigits(5)))
+ Text(myDouble, format: .number.notation(.scientific))
+ 
+ */
