@@ -30,7 +30,6 @@ struct WebView: UIViewRepresentable {
  *  Works only on runtime otherwise broken page.
  */
 struct ReadMoreView: View {
-    // Incoming currency codes to generate url.
     var baseCode : String
     var quoteCode : String
     

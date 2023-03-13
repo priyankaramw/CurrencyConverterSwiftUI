@@ -17,7 +17,7 @@ struct SelectLIstItemView: View {
     var currency : String
     
     var body: some View {
-        // "PLACEHOLDER" changes on runtime. (added just for the visibility)
+        // "PLACEHOLDER"s change on runtime. (added just for more visibility)
         HStack {
             Text("\(code) - \(currency)")
             Spacer()

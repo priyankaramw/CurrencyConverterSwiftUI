@@ -36,15 +36,13 @@ struct ContentView: View {
                     // Picker text below set to null to use currency description as the text
                     
                     Picker("", selection: $baseCode) {
+                        // sending currency code and name for the list item.
                         ForEach(currencyOptions) { item in
-                            // sending currency code and name for the list item.
                             SelectLIstItemView(code: item.code, currency: item.currency).tag(item.code)
                         }
                     }
                     .pickerStyle(.navigationLink)
-                } header: {
-                    Text("Base Currency")
-                }
+                } header: {Text("Base Currency")}
                 
                 //  ******* SECTION SECOND CURRENCY ********
                 Section{
@@ -56,9 +54,7 @@ struct ContentView: View {
                             SelectLIstItemView(code: item.code, currency: item.currency).tag(item.code)
                         }
                     }.pickerStyle(.navigationLink)
-                } header: {
-                    Text("Target Currency")
-                }
+                } header: {Text("Target Currency")}
                 
                 //  ******* SECTION MORE INFO ********
                 Section{
@@ -86,8 +82,8 @@ struct ContentView: View {
             .navigationBarTitleDisplayMode(.automatic)
             
             // Reminder >>>>>>> Should uncoment below two lines before submition. (to limit unnecessary api calls while coding).
-        }.onAppear() {
-            refreshRate()   // Used to load conversion rate on more info section.
+//        }.onAppear() {
+//            refreshRate()   // Used to load conversion rate on more info section.
         }.onChange(of: baseAmount) {newValue in
             // Calculating target value on base change.
             do {try onBaseAmountChange()} catch {infoOrErrorString = strFetchingErrorConst}
