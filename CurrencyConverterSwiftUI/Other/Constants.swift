@@ -13,10 +13,10 @@ import Foundation
 
 
 // Current API key for testing.
-var apiKey = "1c4fbaf27a0a42978eee5f1c"
+// var apiKey = "1c4fbaf27a0a42978eee5f1c"
 
 // Un-used new API key for submision.
-//var apiKey = "Aa0d9833ad573f09811d60ea"
+var apiKey = "Aa0d9833ad573f09811d60ea"
 
 
 struct CurrencyPairRate: Codable {
