@@ -1,5 +1,7 @@
 # CurrencyConverterSwiftUI
 
+*   This application has been made for Rakuten Viki as an assignment.
+* 
 *   The currency conversion works bi-directionally.
 *   Any change done to either section will reflect on other currency.
 *   App uses https://app.exchangerate-api.com/ and, free license is being used.
@@ -8,4 +10,6 @@
 *   No use of fetching “on amounts only” changes since since API provides up to 24 hours accurate data.
 *   The “Read more about [pair]” button redirects to respective google page for selected pair. (This is an additional work and not a requirement of the assignment).
 *   SwiftUI is used for the development with Xcode version 14.2 (target SDK is latest by 12th March 2023).
-*   This application has been made for Rakuten Viki as an assignment.\n\n© Sasith Priyankara.\n\n"
+
+Thank you very much. 
+
