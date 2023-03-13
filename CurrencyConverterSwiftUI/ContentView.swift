@@ -10,8 +10,8 @@ import SwiftUI
 struct ContentView: View {
     
     /*
-     *  Variable declaration clarification.
-     *  base = first currency & value, quote = second currency & value.
+     *  base = first currency.
+     *  quote = second currency.
      *  based on the foreign exchange standards.
      */
     
@@ -34,6 +34,7 @@ struct ContentView: View {
                 Section{
                     TextField("Enter value", value: $baseAmount, formatter: numberFormatter).keyboardType(.decimalPad)
                     // Picker text below set to null to use currency description as the text
+                    
                     Picker("", selection: $baseCode) {
                         ForEach(currencyOptions) { item in
                             // sending currency code and name for the list item.
@@ -48,6 +49,7 @@ struct ContentView: View {
                 //  ******* SECTION SECOND CURRENCY ********
                 Section{
                     TextField("Enter value", value: $quoteAmount, formatter: numberFormatter).keyboardType(.decimalPad)
+                    
                     // Picker text below set to null to use currency description as the text
                     Picker("", selection: $quoteCode) {
                         ForEach(currencyOptions) { item in
@@ -60,16 +62,16 @@ struct ContentView: View {
                 
                 //  ******* SECTION MORE INFO ********
                 Section{
-                    // Below text shows 1 of base equals to how much in quote.
-                    // Otherwise shows error message "Fetching error" if API call is unsuccessful.
+                    // Shows information on cussessfull calculation or user readable error massage.
                     Text(infoOrErrorString)
+                    
                     // Read more sheet.
                     Button("Read more about \(baseCode)/\(quoteCode)") {
                         isViewMorePresenting = true
-                    }
-                    .sheet(isPresented: $isViewMorePresenting) {
+                    }.sheet(isPresented: $isViewMorePresenting) {
                         ReadMoreView(baseCode: baseCode, quoteCode: quoteCode)
                     }
+                    
                     // About application sheet.
                     Button("About application") {
                         isAboutPresenting = true
@@ -88,14 +90,14 @@ struct ContentView: View {
             refreshRate()   // Used to load conversion rate on more info section.
         }.onChange(of: baseAmount) {newValue in
             // Calculating target value on base change.
-            do {try onBaseAmountChange()} catch {infoOrErrorString = fetchingErrorConstStr}
+            do {try onBaseAmountChange()} catch {infoOrErrorString = strFetchingErrorConst}
         }.onChange(of: baseCode) { newValue in
-            do {try onBaseCodeChange()} catch {infoOrErrorString = fetchingErrorConstStr}
+            do {try onBaseCodeChange()} catch {infoOrErrorString = strFetchingErrorConst}
         }.onChange(of: quoteAmount) {newValue in
             // Calculating base value on quote change.
-            do {try onQuoteAmountChange()} catch {infoOrErrorString = fetchingErrorConstStr}
+            do {try onQuoteAmountChange()} catch {infoOrErrorString = strFetchingErrorConst}
         }.onChange(of: quoteCode) {newValue in
-            do {try onQuoteCodeChange()} catch {infoOrErrorString = fetchingErrorConstStr}
+            do {try onQuoteCodeChange()} catch {infoOrErrorString = strFetchingErrorConst}
         }
     }
     @State private var numberFormatter: NumberFormatter = {

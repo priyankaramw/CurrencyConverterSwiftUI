@@ -13,6 +13,7 @@ import Foundation
 
 extension ContentView {
     
+    // API Request.
     func refreshRate () {
         Task {
             let customUrl = "https://v6.exchangerate-api.com/v6/\(apiKey)/pair/\(baseCode)/\(quoteCode)"
@@ -29,19 +30,16 @@ extension ContentView {
         }
     }
     
+    // Calculation logic
     // Devide by 0 never happens on this logic. But I have added error handling for other possibilities. 
     func onBaseAmountChange () throws {
         // Refresh only if null.
-        if (conversionRate == 0) {
-            refreshRate()
-        }
+        if (conversionRate == 0) {refreshRate()}
         quoteAmount = baseAmount * conversionRate
     }
     func onQuoteAmountChange () throws {
         // Refresh only if null.
-        if (conversionRate == 0) {
-            refreshRate()
-        }
+        if (conversionRate == 0) {refreshRate()}
         baseAmount = quoteAmount/conversionRate
     }
     func onBaseCodeChange () throws {
