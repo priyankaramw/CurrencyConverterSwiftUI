@@ -7,12 +7,17 @@
 
 import SwiftUI
 
+/*
+ *  Showing "About application" Sheet
+ */
+
 struct AboutView: View {
     var body: some View {
         ScrollView {
             VStack {
-                Text("About the App").padding().font(.title)
+                Text("About Application").padding().font(.title)
                 Group {
+                    // Fetching text from constants.
                     Text(aboutText).padding()
                 }.padding()
             }

@@ -6,91 +6,93 @@
 //
 
 import SwiftUI
-//import CoreData
 
 struct ContentView: View {
     
     /*
-     *  Variable declaration:
-     *  base = first currency & value
-     *  quote = second currency & value
+     *  Variable declaration clarification.
+     *  base = first currency & value, quote = second currency & value.
+     *  based on the foreign exchange standards.
      */
     
-    @State var baseCode: String = "USD"
+    @State var baseCode: String = "USD" // Default to USD and SGD
     @State var quoteCode: String = "SGD"
     @State var baseAmount : Double = 0.0
     @State var quoteAmount : Double = 0.0
     
     @State var conversionRate : Double = 0.0
     
-    // Below is used to present the "Read more about [currency pair]" sheet and about.
+    // Below variables used to present "Read more..." and, about sheet views.
     @State var isViewMorePresenting = false
     @State var isAboutPresenting = false
-    
-//    @State var currencyObject : CurrencyItem
     
     var body: some View {
         NavigationStack{
             List{
-                // Section for Base Currency
+                // SECTION FIRST CURRENCY - START
                 Section{
-                    TextField("Enter value", value: $baseAmount, formatter: numberFormatter)
-                        .keyboardType(.decimalPad)
-                    Picker("Select", selection: $baseCode) {
+                    TextField("Enter value", value: $baseAmount, formatter: numberFormatter).keyboardType(.decimalPad)
+                    // Picker text below set to null to use currency description as the text
+                    Picker("", selection: $baseCode) {
                         ForEach(currencyOptions) { item in
-                            Text(item.code).tag(item.code)
-//                            SelectLIstItemView(listObject: item).tag(item.code)
+                            // sending currency code and name for the list item.
+                            SelectLIstItemView(code: item.code, currency: item.currency).tag(item.code)
                         }
                     }
                     .pickerStyle(.navigationLink)
                 } header: {
                     Text("Base Currency")
                 }
+                // SECTION FIRST CURRENCY - END
                 
-                // Section for Quote Currency
+                // SECTION SECOND CURRENCY - START
                 Section{
                     TextField("Enter value", value: $quoteAmount, formatter: numberFormatter).keyboardType(.decimalPad)
-                    //Text(quoteSelectedStr)
-                    Picker("Select", selection: $quoteCode) {
+                    // Picker text below set to null to use currency description as the text
+                    Picker("", selection: $quoteCode) {
                         ForEach(currencyOptions) { item in
-                            Text(item.code).tag(item.code)
+                            SelectLIstItemView(code: item.code, currency: item.currency).tag(item.code)
                         }
                     }.pickerStyle(.navigationLink)
                 } header: {
                     Text("Target Currency")
                 }
+                // SECTION SECOND CURRENCY - END
                 
-                // Section for more info
+                // SECTION MORE INFO - START
                 Section{
+                    // Below, conversion rate per 1 of base is always visible so "1" no need to be dynamic.
                     Text("1 \(baseCode) is equal to \(conversionRate, format: .number) \(quoteCode)")
+                    // Read more sheet.
                     Button("Read more about \(baseCode)/\(quoteCode)") {
                         isViewMorePresenting = true
                     }
                     .sheet(isPresented: $isViewMorePresenting) {
                         ReadMoreView(baseCode: baseCode, quoteCode: quoteCode)
                     }
-                    Button("About the app") {
+                    // About application sheet.
+                    Button("About application") {
                         isAboutPresenting = true
-                    }
-                    .sheet(isPresented: $isAboutPresenting) {
+                    }.sheet(isPresented: $isAboutPresenting) {
                         AboutView()
                     }
                 } header: {
                     Text("More Info")
                 }
+                // SECTION MORE INFO - END
             }
             .navigationTitle("Converter")
             .navigationBarTitleDisplayMode(.automatic)
             
-            // Reminder >>>>>>> uncoment below two lines before submiting. (to limit api calls while coding)
-//        }.onAppear() {
-//            refreshRate()   // Used to load exchange rate onLoad
+            // Reminder >>>>>>> Should uncoment below two lines before submition. (to limit unnecessary api calls while coding).
+        }.onAppear() {
+            refreshRate()   // Used to load conversion rate on more info section.
         }.onChange(of: baseAmount) { newValue in
-            onBaseAmountChange()
-        }.onChange(of: quoteAmount) { newValue in
-            onQuoteAmountChange()
+            onBaseAmountChange()  // Calculating target value on base change.
         }.onChange(of: baseCode) { newValue in
             onBaseCodeChange()
+        }.onChange(of: quoteAmount) { newValue in
+            onQuoteAmountChange()  // Calculating base value on quote change.
         }.onChange(of: quoteCode) { newValue in
             onQuoteCodeChange()
         }
@@ -107,15 +109,3 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
-
-
-
-// Number formatter example link
-/* https://developer.apple.com/documentation/swiftui/textfield/init(_:value:formatter:prompt:)-8kpfa
- 
- TextField("Double", value: $myDouble, formatter: numberFormatter)
- Text(myDouble, format: .number)
- Text(myDouble, format: .number.precision(.significantDigits(5)))
- Text(myDouble, format: .number.notation(.scientific))
- 
- */

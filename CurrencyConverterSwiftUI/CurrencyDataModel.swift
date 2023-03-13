@@ -5,11 +5,7 @@
 //  Created by Sasith Priyankara on 12/3/23.
 //
 
-import UIKit
-
-class CurrencyDataModel: NSObject {
-
-}
+import Foundation
 
 struct CurrencyItem: Identifiable, Hashable{
 //    let id = UUID()

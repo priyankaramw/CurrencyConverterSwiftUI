@@ -8,6 +8,10 @@
 import SwiftUI
 import WebKit
 
+/*
+ *  Showing "Read more..." Sheet
+ */
+
 struct WebView: UIViewRepresentable {
     var urlString: String
     func makeUIView(context: Context) -> WKWebView {
@@ -21,7 +25,10 @@ struct WebView: UIViewRepresentable {
     }
 }
 
+// Referancing to google to read more.
+// Shows only on runtime.
 struct ReadMoreView: View {
+    // Incoming currency codes to generate url.
     var baseCode : String
     var quoteCode : String
     

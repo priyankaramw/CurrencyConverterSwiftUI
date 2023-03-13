@@ -5,23 +5,29 @@
 //  Created by Sasith Priyankara on 13/3/23.
 //
 
+import SwiftUI
 
-//import SwiftUI
-//
-//struct SelectLIstItemView: View {
-//    var currencyItem: CurrencyItem?
-//    var body: some View {
-//        HStack {
-//            Text("United States Dollar").multilineTextAlignment(.leading)
-////            Text(" - ")
-//            Text("USD").multilineTextAlignment(.trailing)
-//        }
-//    }
-//}
-//
-//struct SelectLIstItemView_Previews: PreviewProvider {
-//    static var currencyItem : CurrencyItem?
-//    static var previews: some View {
-//        SelectLIstItemView(listObject: currencyItem)
-//    }
-//}
+/*
+ *  Showing single list item for currency code and name. 
+ */
+
+struct SelectLIstItemView: View {
+    
+    var code : String
+    var currency : String
+    
+    var body: some View {
+        // "PLACEHOLDER" changes on runtime. (added just for the visibility)
+        HStack {
+            Text("\(code) - \(currency)")
+            Spacer()
+        }
+    }
+}
+
+struct SelectLIstItemView_Previews: PreviewProvider {
+        
+    static var previews: some View {
+        SelectLIstItemView(code: "PLACEHOLDER", currency: "PLACEHOLDER")
+    }
+}

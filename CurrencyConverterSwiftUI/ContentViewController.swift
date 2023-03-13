@@ -7,6 +7,9 @@
 
 import Foundation
 
+/*
+ *  Calculations. 
+ */
 
 extension ContentView {
     func refreshRate () {
@@ -28,7 +31,7 @@ extension ContentView {
         if (conversionRate == 0) {
             refreshRate()
         }
-        baseAmount = quoteAmount * 1/conversionRate
+        baseAmount = quoteAmount/conversionRate
     }
     func onBaseCodeChange () {
         refreshRate()
@@ -36,7 +39,7 @@ extension ContentView {
     }
     func onQuoteCodeChange () {
         refreshRate()
-        baseAmount = quoteAmount * 1/conversionRate
+        baseAmount = quoteAmount/conversionRate
     }
 }
 
