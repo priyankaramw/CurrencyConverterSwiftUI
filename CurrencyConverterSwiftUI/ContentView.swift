@@ -23,9 +23,11 @@ struct ContentView: View {
     
     @State var conversionRate : Double = 0.0
     
-    // Below variable is used to present the "Read more about [currency pair]" sheet.
-    // Its an additional part for this test.
+    // Below is used to present the "Read more about [currency pair]" sheet and about.
     @State var isViewMorePresenting = false
+    @State var isAboutPresenting = false
+    
+//    @State var currencyObject : CurrencyItem
     
     var body: some View {
         NavigationStack{
@@ -37,7 +39,7 @@ struct ContentView: View {
                     Picker("Select", selection: $baseCode) {
                         ForEach(currencyOptions) { item in
                             Text(item.code).tag(item.code)
-//                            SelectLIstItemView().tag(item.code)
+//                            SelectLIstItemView(listObject: item).tag(item.code)
                         }
                     }
                     .pickerStyle(.navigationLink)
@@ -67,6 +69,12 @@ struct ContentView: View {
                     .sheet(isPresented: $isViewMorePresenting) {
                         ReadMoreView(baseCode: baseCode, quoteCode: quoteCode)
                     }
+                    Button("About the app") {
+                        isAboutPresenting = true
+                    }
+                    .sheet(isPresented: $isAboutPresenting) {
+                        AboutView()
+                    }
                 } header: {
                     Text("More Info")
                 }
@@ -75,8 +83,8 @@ struct ContentView: View {
             .navigationBarTitleDisplayMode(.automatic)
             
             // Reminder >>>>>>> uncoment below two lines before submiting. (to limit api calls while coding)
-        }.onAppear() {
-            refreshRate()   // Used to load exchange rate onLoad
+//        }.onAppear() {
+//            refreshRate()   // Used to load exchange rate onLoad
         }.onChange(of: baseAmount) { newValue in
             onBaseAmountChange()
         }.onChange(of: quoteAmount) { newValue in

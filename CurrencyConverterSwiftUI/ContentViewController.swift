@@ -33,12 +33,10 @@ extension ContentView {
     func onBaseCodeChange () {
         refreshRate()
         quoteAmount = baseAmount * conversionRate
-//        viewMoreUrl = "https://www.google.com/finance/quote/\(baseCode)-\(quoteCode)"
     }
     func onQuoteCodeChange () {
         refreshRate()
         baseAmount = quoteAmount * 1/conversionRate
-//        viewMoreUrl = "https://www.google.com/finance/quote/\(baseCode)-\(quoteCode)"
     }
 }
 

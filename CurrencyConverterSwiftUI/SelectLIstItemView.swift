@@ -6,12 +6,10 @@
 //
 
 
-// To implement later
-
-
 //import SwiftUI
 //
 //struct SelectLIstItemView: View {
+//    var currencyItem: CurrencyItem?
 //    var body: some View {
 //        HStack {
 //            Text("United States Dollar").multilineTextAlignment(.leading)
@@ -22,7 +20,8 @@
 //}
 //
 //struct SelectLIstItemView_Previews: PreviewProvider {
+//    static var currencyItem : CurrencyItem?
 //    static var previews: some View {
-//        SelectLIstItemView()
+//        SelectLIstItemView(listObject: currencyItem)
 //    }
 //}
