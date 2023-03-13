@@ -7,12 +7,18 @@
 
 import Foundation
 
+/*
+ *  Constants.
+ */
+
 var apiKey = "1c4fbaf27a0a42978eee5f1c"
 
 struct CurrencyPairRate: Codable {
     let result: String // "success" or "error"
     let conversion_rate: Double
 }
+
+var fetchingErrorConstStr = "Fetching error."
 
 var aboutText = "*   The currency conversion works bi-directionally.\n\n*    Any change done to either section will reflect on other currency.\n\n*   App uses https://app.exchangerate-api.com/ as instructed and, free license is being used.\n\n*   The app sends API calls on view loading (once) and only on either currency code change.\n\n*   If the currency codes are intact and only the amounts changed, it uses last fetched rate.\n\n*   No use of fetching “on amounts only” changes since since API provides up to 24 hours accurate data.\n\n*   The “Read more about [pair]” button redirects to respective google page for selected pair. (This is an additional work and not a requirement of the assignment).\n\n*   SwiftUI is used for the development with Xcode version 14.2 (target SDK is latest by 12th March 2023).\n\n*   This application has been made for Rakuten Viki as an assignment.\n\n*   © Sasith Priyankara.\n\n"
 
@@ -187,5 +193,5 @@ let currencyOptions = [
 ]
 
 
-// Number formatter example link
+// Number formatter documentation
 // https:developer.apple.com/documentation/swiftui/textfield/init(_:value:formatter:prompt:)-8kpfa

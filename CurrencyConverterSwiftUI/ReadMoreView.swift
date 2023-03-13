@@ -25,8 +25,10 @@ struct WebView: UIViewRepresentable {
     }
 }
 
-// Referancing to google to read more.
-// Shows only on runtime.
+/*
+ *  Provide more information through google for the selected currency pair (default to USD/SGD)
+ *  Works only on runtime otherwise broken page.
+ */
 struct ReadMoreView: View {
     // Incoming currency codes to generate url.
     var baseCode : String

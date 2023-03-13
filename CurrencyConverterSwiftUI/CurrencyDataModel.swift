@@ -7,8 +7,11 @@
 
 import Foundation
 
+/*
+ *  Currency data model that includes country.
+ */
+
 struct CurrencyItem: Identifiable, Hashable{
-//    let id = UUID()
     var id: Int
     var code: String
     var currency: String

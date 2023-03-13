@@ -21,15 +21,16 @@ struct ContentView: View {
     @State var quoteAmount : Double = 0.0
     
     @State var conversionRate : Double = 0.0
+    @State var infoOrErrorString : String = "" // Checking for successfll Api call.
     
-    // Below variables used to present "Read more..." and, about sheet views.
+    // Below variables used to present "Read more" and, "About" sheet views.
     @State var isViewMorePresenting = false
     @State var isAboutPresenting = false
     
     var body: some View {
         NavigationStack{
             List{
-                // SECTION FIRST CURRENCY - START
+                //  ******* SECTION FIRST CURRENCY ********
                 Section{
                     TextField("Enter value", value: $baseAmount, formatter: numberFormatter).keyboardType(.decimalPad)
                     // Picker text below set to null to use currency description as the text
@@ -43,9 +44,8 @@ struct ContentView: View {
                 } header: {
                     Text("Base Currency")
                 }
-                // SECTION FIRST CURRENCY - END
                 
-                // SECTION SECOND CURRENCY - START
+                //  ******* SECTION SECOND CURRENCY ********
                 Section{
                     TextField("Enter value", value: $quoteAmount, formatter: numberFormatter).keyboardType(.decimalPad)
                     // Picker text below set to null to use currency description as the text
@@ -57,12 +57,12 @@ struct ContentView: View {
                 } header: {
                     Text("Target Currency")
                 }
-                // SECTION SECOND CURRENCY - END
                 
-                // SECTION MORE INFO - START
+                //  ******* SECTION MORE INFO ********
                 Section{
-                    // Below, conversion rate per 1 of base is always visible so "1" no need to be dynamic.
-                    Text("1 \(baseCode) is equal to \(conversionRate, format: .number) \(quoteCode)")
+                    // Below text shows 1 of base equals to how much in quote.
+                    // Otherwise shows error message "Fetching error" if API call is unsuccessful.
+                    Text(infoOrErrorString)
                     // Read more sheet.
                     Button("Read more about \(baseCode)/\(quoteCode)") {
                         isViewMorePresenting = true
@@ -79,7 +79,6 @@ struct ContentView: View {
                 } header: {
                     Text("More Info")
                 }
-                // SECTION MORE INFO - END
             }
             .navigationTitle("Converter")
             .navigationBarTitleDisplayMode(.automatic)
@@ -87,14 +86,16 @@ struct ContentView: View {
             // Reminder >>>>>>> Should uncoment below two lines before submition. (to limit unnecessary api calls while coding).
         }.onAppear() {
             refreshRate()   // Used to load conversion rate on more info section.
-        }.onChange(of: baseAmount) { newValue in
-            onBaseAmountChange()  // Calculating target value on base change.
+        }.onChange(of: baseAmount) {newValue in
+            // Calculating target value on base change.
+            do {try onBaseAmountChange()} catch {infoOrErrorString = fetchingErrorConstStr}
         }.onChange(of: baseCode) { newValue in
-            onBaseCodeChange()
-        }.onChange(of: quoteAmount) { newValue in
-            onQuoteAmountChange()  // Calculating base value on quote change.
-        }.onChange(of: quoteCode) { newValue in
-            onQuoteCodeChange()
+            do {try onBaseCodeChange()} catch {infoOrErrorString = fetchingErrorConstStr}
+        }.onChange(of: quoteAmount) {newValue in
+            // Calculating base value on quote change.
+            do {try onQuoteAmountChange()} catch {infoOrErrorString = fetchingErrorConstStr}
+        }.onChange(of: quoteCode) {newValue in
+            do {try onQuoteCodeChange()} catch {infoOrErrorString = fetchingErrorConstStr}
         }
     }
     @State private var numberFormatter: NumberFormatter = {
