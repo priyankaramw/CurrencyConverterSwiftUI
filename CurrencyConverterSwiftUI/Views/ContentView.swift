@@ -82,8 +82,8 @@ struct ContentView: View {
             .navigationBarTitleDisplayMode(.automatic)
             
             // Reminder >>>>>>> Should uncoment below two lines before submition. (to limit unnecessary api calls while coding).
-//        }.onAppear() {
-//            refreshRate()   // Used to load conversion rate on more info section.
+        }.onAppear() {
+            refreshRate()   // Used to load conversion rate on more info section.
         }.onChange(of: baseAmount) {newValue in
             // Calculating target value on base change.
             do {try onBaseAmountChange()} catch {infoOrErrorString = strFetchingErrorConst}
