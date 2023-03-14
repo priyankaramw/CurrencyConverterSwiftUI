@@ -1,10 +1,10 @@
 # CurrencyConverterSwiftUI
 
-About
+About:
 
 •  This application has been made for Rakuten Viki as an assignment by Sasith Priyankara.
 
-Functionality
+Functionality:
 
 •  Conversion works bi-directionally similar to the Google currency calculator.
 
@@ -20,7 +20,7 @@ Functionality
 
 •  'Read more about [pair]' button redirects to respective google page for selected pair. (This is an additional work and not a requirement of the assignment).
 
-Currency Service
+Currency Service:
 
 •  App uses https://app.exchangerate-api.com/ and, free license is being used."
 
