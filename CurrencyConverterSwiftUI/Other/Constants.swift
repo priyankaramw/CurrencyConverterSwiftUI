@@ -13,7 +13,7 @@ import Foundation
 
 
 // Current API key for testing.
-// var apiKey = "1c4fbaf27a0a42978eee5f1c"
+//var apiKey = "1c4fbaf27a0a42978eee5f1c"
 
 // Un-used new API key for submision.
 var apiKey = "Aa0d9833ad573f09811d60ea"
@@ -26,11 +26,23 @@ struct CurrencyPairRate: Codable {
 
 var strFetchingErrorConst = "Fetching error."
 
-var aboutText = "*   The currency conversion works bi-directionally.\n\n*    Any change done to either section will reflect on other currency.\n\n*   App uses https://app.exchangerate-api.com/ as instructed and, free license is being used.\n\n*   The app sends API calls on view loading (once) and only on either currency code change.\n\n*   If the currency codes are intact and only the amounts changed, it uses last fetched rate.\n\n*   No use of fetching “on amounts only” changes since since API provides up to 24 hours accurate data.\n\n*   The “Read more about [pair]” button redirects to respective google page for selected pair. (This is an additional work and not a requirement of the assignment).\n\n*   SwiftUI is used for the development with Xcode version 14.2 (target SDK is latest by 12th March 2023).\n\n*   This application has been made for Rakuten Viki as an assignment.\n\n© Sasith Priyankara.\n\n"
+var aboutTxt_title = "About"
+var aboutTxt_1 = "•  This application has been made for Rakuten Viki as an assignment by Sasith Priyankara."
 
+var instructionTxt_title = "Functionality"
+var instructionTxt_1 = "•  Conversion works bi-directionally similar to the Google currency calculator."
+var instructionTxt_2 = "•  Change of 'any amount' will reflect on other currency amount."
+var instructionTxt_3 = "•  Change of the 'base currency code' will reflect on target currency amount."
+var instructionTxt_4 = "•  But, change of 'target currency code' will reflect on its 'own amount'. (First amount remain intact)."
+var instructionTxt_5 = "•  The 'Read more about [pair]' button redirects to respective google page for selected pair. (This is an additional work and not a requirement of the assignment)."
+var instructionTxt_6 = "•  But, change of 'target currency code' will reflect on its 'own amount'. (First amount remain intact)."
+var instructionTxt_7 = "•  'Read more about [pair]' button redirects to respective google page for selected pair. (This is an additional work and not a requirement of the assignment)."
 
+var systemTxt_title = "Currency Service"
+var systemTxt_1 = "•  App uses https://app.exchangerate-api.com/ and, free license is being used."
+var systemTxt_2 = "•  The app fetch conversion rate on app loading and on either currency code change only."
 
-
+var thankTxt = "Thank you...!"
 
 /*
  *  Please note that I have used this object list because I wanted to use the country name as well which is not provided by the API calls but on their website directly.
@@ -204,3 +216,8 @@ let currencyOptions = [
 
 // Number formatter documentation
 // https:developer.apple.com/documentation/swiftui/textfield/init(_:value:formatter:prompt:)-8kpfa
+
+
+
+
+

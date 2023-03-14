@@ -90,6 +90,7 @@
 		61965FB629BF375A007C6D14 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				619AA06C29BB458B009A9357 /* Assets.xcassets */,
 				619AA06829BB458A009A9357 /* CurrencyConverterSwiftUIApp.swift */,
 				61A6521B29BE460800FC440D /* SelectLIstItemView.swift */,
 				61A6521D29BE50E300FC440D /* ReadMoreView.swift */,
@@ -151,7 +152,6 @@
 				61965FBA29BF3864007C6D14 /* Model */,
 				61965FB929BF3835007C6D14 /* Controller */,
 				61965FB629BF375A007C6D14 /* Views */,
-				619AA06C29BB458B009A9357 /* Assets.xcassets */,
 				619AA07329BB458B009A9357 /* CurrencyConverterSwiftUI.xcdatamodeld */,
 				619AA06E29BB458B009A9357 /* Preview Content */,
 			);
