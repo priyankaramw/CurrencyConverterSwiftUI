@@ -27,20 +27,18 @@ struct CurrencyPairRate: Codable {
 var strFetchingErrorConst = "Fetching error."
 
 var aboutTxt_title = "About"
-var aboutTxt_1 = "•  This application has been made for Rakuten Viki as an assignment by Sasith Priyankara."
+var aboutTxt_1 = "This application has been made for Rakuten Viki as an assignment by Sasith Priyankara."
 
 var instructionTxt_title = "Functionality"
-var instructionTxt_1 = "•  Conversion works bi-directionally similar to the Google currency calculator."
-var instructionTxt_2 = "•  Change of 'any amount' will reflect on other currency amount."
-var instructionTxt_3 = "•  Change of the 'base currency code' will reflect on target currency amount."
-var instructionTxt_4 = "•  But, change of 'target currency code' will reflect on its 'own amount'. (First amount remain intact)."
-var instructionTxt_5 = "•  The 'Read more about [pair]' button redirects to respective google page for selected pair. (This is an additional work and not a requirement of the assignment)."
-var instructionTxt_6 = "•  But, change of 'target currency code' will reflect on its 'own amount'. (First amount remain intact)."
-var instructionTxt_7 = "•  'Read more about [pair]' button redirects to respective google page for selected pair. (This is an additional work and not a requirement of the assignment)."
+var instructionTxt_1 = "Conversion works bi-directionally similar to the Google currency calculator."
+var instructionTxt_2 = "Change of 'any amount' will reflect on other currency amount."
+var instructionTxt_3 = "Change of the 'base currency code' will reflect on target currency amount."
+var instructionTxt_4 = "But, change of 'target currency code' will reflect on its 'own amount'. (First amount remain intact)."
+var instructionTxt_5 = "The 'Read more about [pair]' button redirects to respective google page for selected pair. (This is an additional work and not a requirement of the assignment)."
 
 var systemTxt_title = "Currency Service"
-var systemTxt_1 = "•  App uses https://app.exchangerate-api.com/ and, free license is being used."
-var systemTxt_2 = "•  The app fetch conversion rate on app loading and on either currency code change only."
+var systemTxt_1 = "App uses https://app.exchangerate-api.com/ and, free license is being used."
+var systemTxt_2 = "The app fetch conversion rate on app loading and on either currency code change only."
 
 var thankTxt = "Thank you...!"
 

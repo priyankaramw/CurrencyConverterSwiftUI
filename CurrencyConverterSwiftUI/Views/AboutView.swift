@@ -28,8 +28,6 @@ struct AboutView: View {
                     Text(instructionTxt_3).padding(.vertical)
                     Text(instructionTxt_4).padding(.vertical)
                     Text(instructionTxt_5).padding(.vertical)
-                    Text(instructionTxt_6).padding(.vertical)
-                    Text(instructionTxt_7).padding(.vertical)
                 }
                 // Section System
                 Group {
