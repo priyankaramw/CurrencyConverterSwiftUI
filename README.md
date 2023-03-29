@@ -2,7 +2,7 @@
 
 About:
 
-•  This application has been made for Rakuten Viki as an assignment by Sasith Priyankara.
+•  This application has been made as a sample app for testing purposes by Sasith Priyankara.
 
 Functionality:
 
