@@ -1,6 +1,8 @@
 # CurrencyConverterSwiftUI
 
-About:
+* Alert: Currency conversion rates are accurate only for the past 24 hours due to the free tier limitations of the API used. 
+
+About App:
 
 •  This application has been made as a sample app for testing purposes by Sasith Priyankara.
 
@@ -14,11 +16,8 @@ Functionality:
 
 •  But, change of 'target currency code' will reflect on its 'own amount'. (First amount remain intact).
 
-•  The 'Read more about [pair]' button redirects to respective google page for selected pair. (This is an additional work and not a requirement of the assignment).
+•  The 'Read more about [pair]' button redirects to respective google page for selected pair. (This provides real time conversion rate.)
 
-•  But, change of 'target currency code' will reflect on its 'own amount'. (First amount remain intact).
-
-•  'Read more about [pair]' button redirects to respective google page for selected pair. (This is an additional work and not a requirement of the assignment).
 
 Currency Service:
 
