@@ -1,9 +1,10 @@
 # CurrencyConverterSwiftUI
 
 ![Screenshot 2023-08-21 at 12 21 32 AM](https://github.com/priyankaramw/CurrencyConverterSwiftUI/assets/12417020/ddb089e3-3266-45bb-8b66-6d143771e4ba)
-![Screenshot 2023-08-20 at 9 47 53 PM](https://github.com/priyankaramw/CurrencyConverterSwiftUI/assets/12417020/ef42b060-9843-46f8-b9b8-a43712acda46)
-![Screenshot 2023-08-20 at 9 46 15 PM](https://github.com/priyankaramw/CurrencyConverterSwiftUI/assets/12417020/13e58d1f-d1d2-45c9-95a9-345065ce7a5b)
-![Screenshot 2023-08-20 at 9 48 23 PM](https://github.com/priyankaramw/CurrencyConverterSwiftUI/assets/12417020/7f9b6166-9cfa-4b8b-9c8b-37210edf615d)
+![Screenshot 2023-08-21 at 12 24 53 AM](https://github.com/priyankaramw/CurrencyConverterSwiftUI/assets/12417020/569d35d8-8485-409a-a63a-1e49d0df282a)
+![Screenshot 2023-08-21 at 12 25 37 AM](https://github.com/priyankaramw/CurrencyConverterSwiftUI/assets/12417020/8787741c-71bf-48a0-8edd-235e91d977c9)
+![Screenshot 2023-08-21 at 12 26 12 AM](https://github.com/priyankaramw/CurrencyConverterSwiftUI/assets/12417020/3cfcd1ef-4e0a-4cf3-8383-b1fe40255308)
+
 
 * Alert: Currency conversion rates are accurate only for the past 24 hours due to the free tier limitations of the API used. 
 
